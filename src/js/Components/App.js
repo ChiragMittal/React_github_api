@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import '../../css/App.css';
 import Single_Person from './Single_Person.react'
+import {Button} from 'react-bootstrap'
 
 
 export default class App extends Component {
@@ -14,15 +15,22 @@ export default class App extends Component {
             loading : false,
             query:"",
             filter:"",
-            filtered_char:[]
+            filtered_char:[],
+            
         }
     }
 
     componentDidMount() {
+        
+        this.fetch(this.state.page)
 
-        //console.log(this.state.page)
+       }
+       
+   async fetch(page){
 
-        fetch("https://api.github.com/users?since="+this.state.page)
+        console.log(page)
+
+      await  fetch("https://api.github.com/users?since="+page)
         .then(res => res.json())
       .then(
         (result) => {
@@ -92,6 +100,30 @@ export default class App extends Component {
 
     }
 
+  async  moveForward(){
+
+        let inc = this.state.page+1
+
+      await  this.setState({
+            page: inc ,
+            
+        })
+
+        
+      return  this.fetch(this.state.page)
+    }
+
+    async  moveBackward(){
+
+        let dec = this.state.page-1
+
+      await  this.setState({
+            page: dec ,
+            
+        })
+
+      return  this.fetch(this.state.page)
+    }
     
     
 
@@ -108,6 +140,14 @@ export default class App extends Component {
               <i className="fas fa-search"></i>
             </button>
           </div>
+
+        { this.state.page > 1  ?
+        <div>
+            <Button onClick={this.moveForward.bind(this)} variant="outline-primary">Next</Button>
+            <Button onClick={this.moveBackward.bind(this)} variant="outline-primary">Previous</Button>
+        </div>:
+    <Button onClick={this.moveForward.bind(this)} variant="outline-primary">Next</Button>
+    }
 
           {this.state.filter.length ? 
 
