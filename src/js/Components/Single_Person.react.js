@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {Link} from 'react-router-dom'
-import '../../css/App.css';
+
 import { Grid, Row, Col } from 'react-bootstrap';
 
 export default class Single_Person extends Component {
@@ -17,16 +17,19 @@ export default class Single_Person extends Component {
        // console.log(this.props.id)
         
         return (
-          <div className="person-info">
-            <img src={this.props.image} />
-             <Link to={`/users/${this.props.login}`} >{this.props.login} </Link> 
+
         
-            {/* <h3 className="username">{this.props.username} </h3> */}
+            <div className="card person-info col-sm-6 col-md-8 col-lg-3" style={{boxShadow: "0 4px 8px 0 rgba(0,0,0,0.2)",
+                transition: "0.3s",
+                width: "20%",display:"flex" , margin:"auto"}}>
+               <img src={this.props.image}  style={{width:"50%"}}/>
+                <div class="container" style={{padding: "2px 16px"}}>
+                    <Link to={`/users/${this.props.login}`} ><b style={{marginTop:"20px",display:"flex"}}>{this.props.login} </b></Link> 
             
-    
-    
-    
-          </div>
+                </div>
+            </div>
+       
+          
         );
       }
 

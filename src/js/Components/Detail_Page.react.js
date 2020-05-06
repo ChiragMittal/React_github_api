@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import {Link} from 'react-router-dom'
-import '../../css/App.css';
 import { Grid, Row, Col } from 'react-bootstrap';
 import Followers from './Followers.react';
 
@@ -44,24 +43,38 @@ export default class Detail_Page extends Component {
         
         return (
           <div className="single_person-info">
+             
           
           <Grid>
-          <Row className="show-grid">
-            <Col md={3} className="text-center profile_part">
+       
+          <img  style=
+                    {{width: "30%",
+                        height: "30%", borderRadius:"50%",marginTop:"100px"
+                        }} 
+               
+             src={this.state.single.avatar_url} />
 
-             <img src={this.state.single.avatar_url} />
-             <p>{this.state.single.name}</p>
+            <p style={{fontSize:"40px",marginTop:"20px"}}>{this.state.single.name}</p>
 
-             <div className="flux-count">
-                    <Col md={4}>
-                    <p className="follow">FOLLOWERS</p>
-                <p>{this.state.single.followers}</p>    
+          <Row className="show-grid" >
+            <Col sm={3} className="text-center profile_part"  style = {{float:"right" , marginRight:"100px",marginTop:"-240px",fontSize:"20px",display:"flex"}}>
+
+             
+             
+             
+
+             <div className="flux-count" style={{display:"grid"}}>
+                    <Col md={4} >
+                    
+                    <p className="follow"> FOLLOWERS</p>
+                    <p>{this.state.single.followers}</p>   
+               
                     </Col>
                     <Col md={4} mdOffset={4}>
                     <p className="following">FOLLOWING</p>
                     <p>{this.state.single.following}</p>
                     </Col>
-                    <Col md={4} mdOffset={4}>
+                    <Col md={4} mdOffset={8}>
                     <p className="favourites">REPOSITORIES</p>
                     <p>{this.state.single.public_repos}</p>
                     </Col>
@@ -70,8 +83,10 @@ export default class Detail_Page extends Component {
 
             </Col>
 
-            <Col md={5} mdOffset={4}>
+            <Col sm={5} mdOffset={6}>
+                <main>
               <Followers  login={this.props.match.params.id}/>
+              </main>
             </Col>
 
 

@@ -40,7 +40,32 @@ export default class Followers extends Component {
         console.log(followers)
         return followers.map(user =>
            
-                       <li className="item" >{user.login}</li>
+                <div className="item" style={{
+                    padding: "5px",
+    zIndex: "-2",
+    boxSizing: "border-box",
+    boxShadow: "0 2px 10px 0 rgba(0, 0, 0, 0.08)",
+    margin: "20px",
+    display: "flex",
+    alignItems: "center",
+    marginLeft: "0",
+                    
+                    }}>
+
+                    <img style=
+                    {{width: "55px",
+                        height: "55px", borderRadius:"50%"
+                        }} 
+    className='user-data-img' src={user.avatar_url} alt="" />
+                    <h3><a className='user-data-login'
+                    
+                    style={{marginLeft: "12px",
+                        color: "black",
+                        textDecoration: "none"}}
+                    
+                    href={user.html_url}>{user.login}</a></h3>
+
+                </div>
                      
                  );    
          
@@ -85,7 +110,7 @@ export default class Followers extends Component {
                     hasMore={this.state.hasMore}
                     loader={<h4>Loading...</h4>}
                 >
-                    
+                    <h2>Followers of {this.props.login}</h2>
                         <div className="data-wrapper">
                              <p>{this.list_followers(this.state.data)}</p>
                         </div>

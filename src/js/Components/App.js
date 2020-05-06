@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../../css/App.css';
+
 import Single_Person from './Single_Person.react'
 import {Button} from 'react-bootstrap'
 
@@ -60,7 +60,9 @@ export default class App extends Component {
        return users.map((user,key) =>
         //  console.log(user.id)
                     // <li className="item">{user.login}</li>
-                    <Single_Person key={key} login= {user.login} image={user.avatar_url} id={user.id}/>
+                    <div className="hello" >
+                        <Single_Person key={key} login= {user.login} image={user.avatar_url} id={user.id}/>
+                    </div>
                 );
 
              
@@ -133,43 +135,38 @@ export default class App extends Component {
 
         return (
             <div className="App">
-            	<div id='search-bar'>
-            <input type="text" placeholder='Enter UserName' onChange={this.onQueryChange.bind(this)}
+            	<div id='search-bar' style={{textAlign:"center"}}>
+            <input type="text" placeholder='Enter UserName' onChange={this.onQueryChange.bind(this)}  style={{
+                height:"50px",borderRadius:"20px",outline:"none",width:"25%",marginTop:"20px"
+            }}
      />
-            <button className='searchButton' onClick={this.getUser.bind(this)}>
-              <i className="fas fa-search"></i>
+            <button className='searchButton' onClick={this.getUser.bind(this)} style={{height:"50px",background:"#ffeb3b",borderRadius:"20px",outline:"none",padding:"10px",marginBottom:"10px"}}>
+              Search
             </button>
           </div>
 
-        { this.state.page > 1  ?
-        <div>
-            <Button onClick={this.moveForward.bind(this)} variant="outline-primary">Next</Button>
-            <Button onClick={this.moveBackward.bind(this)} variant="outline-primary">Previous</Button>
-        </div>:
-    <Button onClick={this.moveForward.bind(this)} variant="outline-primary">Next</Button>
-    }
-
           {this.state.filter.length ? 
 
-                    <div >
-                    {/* <p>{this.getUser.bind(this)}</p> */}
-          <p>{this.list_users(this.state.filtered_char)}</p>
+                    <div style={{display: "grid"}}>
+                    
+                            <p>{this.list_users(this.state.filtered_char)}</p>
                     </div>
                    :
 
-                   <div className="all_users">
+            <div className="all_users" >
                  <p>{this.list_users(this.state.users)}</p>
-          </div> 
+            </div> 
                 
             }
 
-            
-            
-                    
-        
-        
+{ this.state.page > 1  ?
+        <div>
+            <Button onClick={this.moveForward.bind(this)} variant="outline-primary" style={{float:"right",marginTop:"20px",marginBottom:"20px",textAlign:"center"}}>Next</Button>
+            <Button onClick={this.moveBackward.bind(this)} variant="outline-primary" style={{float:"left",marginTop:"20px",marginBottom:"20px",textAlign:"center"}}>Previous</Button>
+        </div>:
+    <Button onClick={this.moveForward.bind(this)} variant="outline-primary"style={{float:"right",marginTop:"20px",marginBottom:"20px",textAlign:"center"}} >Next</Button>
+    }
 
-                {/*  */}
             </div>
         );
     }
