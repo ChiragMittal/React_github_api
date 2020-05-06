@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import Single_Person from './Single_Person.react'
 import {Button} from 'react-bootstrap'
+import { Link } from 'react-router-dom';
+import InfiniteScroll from "react-infinite-scroll-component"
 
 
 export default class App extends Component {
@@ -9,14 +11,16 @@ export default class App extends Component {
 	constructor(props) {
         super(props);
         this.state = {
-            users:[],
+            data:[],
             page:1,
             error:null,
             loading : false,
             query:"",
             filter:"",
             filtered_char:[],
-            
+            hasMore: true,
+            loading:true ,
+            nextDataPage : 2
         }
     }
 
@@ -36,7 +40,7 @@ export default class App extends Component {
         (result) => {
           this.setState({
             isLoaded: true,
-            users: result
+            data: result
           });
         
 
@@ -88,7 +92,7 @@ export default class App extends Component {
                  error: "" 
                 })
 
-            const filteredCharacters =  this.state.users.filter((character) =>{
+            const filteredCharacters =  this.state.data.filter((character) =>{
                 return(
                      character.login.includes(this.state.query)
                         
@@ -127,6 +131,51 @@ export default class App extends Component {
       return  this.fetch(this.state.page)
     }
     
+    fetchMoreData = () => {
+      if (this.state.hasMore === true) {
+          let num = this.state.nextDataPage;
+          console.log(num)
+          setTimeout(() => {
+              fetch("https://api.github.com/users?since="+num)
+                  .then(response => response.json())
+                  .then(data => {
+                      
+                      if (data.length > 0) {
+                          this.setState((prevState) => ({
+                              hasMore: true,
+                              nextDataPage: num + 1,
+                              data: prevState.data.concat(data)
+                          }))
+                      } else {
+                          this.setState({
+                              hasMore: false,
+                              
+
+                          })
+                      }
+
+                      let uniqueObject = {}; 
+                      let newArray = []; 
+                        this.state.data.map((datas, index) =>{
+                          //console.log(datas['login'])
+                       let objTitle = datas['login']
+                        uniqueObject[objTitle] = datas
+                        })
+
+                        for (let i in uniqueObject) { 
+                          newArray.push(uniqueObject[i]); 
+                      } 
+
+                      console.log(newArray)
+
+                      this.setState({
+                        data : newArray
+                      })
+                      
+                  })
+          }, 500);
+      }
+  }
     
 
     render() {
@@ -152,20 +201,25 @@ export default class App extends Component {
                             <p>{this.list_users(this.state.filtered_char)}</p>
                     </div>
                    :
-
-            <div className="all_users" >
-                 <p>{this.list_users(this.state.users)}</p>
-            </div> 
-                
+              <InfiniteScroll
+                    dataLength={this.state.data.length}
+                    next={this.fetchMoreData.bind(this)}
+                    hasMore={this.state.hasMore}
+                    loader={<h4>Loading...</h4>}
+                >
+                    <div className="all_users" >
+                        <p>{this.list_users(this.state.data)}</p>
+                    </div> 
+            </InfiniteScroll>            
             }
 
-{ this.state.page > 1  ?
+{/* { this.state.page > 1  ?
         <div>
             <Button onClick={this.moveForward.bind(this)} variant="outline-primary" style={{float:"right",marginTop:"20px",marginBottom:"20px",textAlign:"center"}}>Next</Button>
             <Button onClick={this.moveBackward.bind(this)} variant="outline-primary" style={{float:"left",marginTop:"20px",marginBottom:"20px",textAlign:"center"}}>Previous</Button>
         </div>:
-    <Button onClick={this.moveForward.bind(this)} variant="outline-primary"style={{float:"right",marginTop:"20px",marginBottom:"20px",textAlign:"center"}} >Next</Button>
-    }
+  <Button onClick={this.moveForward.bind(this)} variant="outline-primary"style={{float:"right",marginTop:"20px",marginBottom:"20px",textAlign:"center"}} >Next</Button>
+    } */}
 
             </div>
         );

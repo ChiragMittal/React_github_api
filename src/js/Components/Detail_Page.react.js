@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {Link} from 'react-router-dom'
-import { Grid, Row, Col } from 'react-bootstrap';
+import { Grid, Row, Col , Button } from 'react-bootstrap';
 import Followers from './Followers.react';
 
 export default class Detail_Page extends Component {
@@ -43,7 +43,7 @@ export default class Detail_Page extends Component {
         
         return (
           <div className="single_person-info">
-             
+        <Link to='/'> <Button variant="outline-primary" style={{float:"left",marginTop:"20px",marginBottom:"20px", marginLeft :"10px",textAlign:"center"}}>Home</Button>   </Link> 
           
           <Grid>
        
