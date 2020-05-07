@@ -5,3 +5,7 @@ Steps of Instruction
 3) npm install
 4) npm run start
 
+Features 
+
+1) Infinite Scrolling in all users page and profile page
+2)Searching of all displayed users .
