@@ -8,4 +8,4 @@ Steps of Instruction
 Features 
 
 1) Infinite Scrolling in all users page and profile page
-2)Searching of all displayed users .
+2) Searching of all displayed users .
